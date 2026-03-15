@@ -1,3 +1,37 @@
+<style>
+body { background-color: var(--color-bg-alt); }
+        .admin-layout { display: flex; min-height: 100vh; }
+        .admin-sidebar { width: 240px; background: var(--color-bg); border-right: 1px solid var(--color-border); padding: var(--space-4); flex-shrink: 0; }
+        .admin-main { flex: 1; padding: var(--space-6); overflow-y: auto; }
+        .admin-nav-link { display: block; padding: 10px var(--space-2); margin-bottom: 4px; border-radius: var(--radius-sm); font-weight: 500; color: var(--color-text-muted); font-size: var(--font-size-sm); transition: all var(--transition-fast); }
+        .admin-nav-link:hover, .admin-nav-link.active { background: var(--color-bg-alt); color: var(--color-primary); }
+        .admin-card { background: var(--color-bg); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: var(--space-4); margin-bottom: var(--space-4); border: 1px solid var(--color-border); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px var(--space-2); border-bottom: 1px solid var(--color-border); font-size: var(--font-size-sm); }
+        th { color: var(--color-text-muted); font-weight: 600; text-transform: uppercase; font-size: var(--font-size-xs); letter-spacing: 0.06em; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: var(--color-bg); padding: var(--space-6); border-radius: var(--radius-md); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+        .sizes-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+        .size-check { display: flex; align-items: center; gap: 4px; padding: 6px 12px; border: 1px solid var(--color-border); border-radius: var(--radius-sm); cursor: pointer; font-size: var(--font-size-sm); transition: all var(--transition-fast); }
+        .size-check:has(input:checked) { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+        .size-check input { display: none; }
+        .status-badge { display: inline-block; padding: 3px 10px; border-radius: var(--radius-full); font-size: var(--font-size-xs); font-weight: 600; }
+        .status-badge.paid { background: #e6f4ea; color: #1e8e3e; }
+        .auth-gate { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--color-bg-alt); }
+        .auth-card { background: var(--color-bg); padding: var(--space-8); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 100%; max-width: 380px; text-align: center; }
+        .auth-card .logo { font-size: var(--font-size-3xl); margin-bottom: var(--space-4); display: block; }
+        .auth-error { color: #d93025; font-size: var(--font-size-sm); margin-top: var(--space-2); display: none; }
+        /* Variant builder */
+        .variant-row { background: var(--color-bg-alt); border: 1px solid var(--color-border); border-radius: var(--radius-sm); padding: var(--space-2); margin-bottom: var(--space-2); }
+        .variant-header { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-1); }
+        .variant-color-preview { width: 28px; height: 28px; border-radius: var(--radius-full); border: 2px solid var(--color-border); flex-shrink: 0; }
+        .variant-images { display: flex; flex-wrap: wrap; gap: 6px; margin-top: var(--space-1); }
+        .variant-img-thumb { width: 48px; height: 48px; border-radius: 4px; overflow: hidden; background: #eee; }
+        .variant-img-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        @media (max-width: 767px) { .admin-layout { flex-direction: column; } .admin-sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--color-border); } }
+</style>
+
 <!-- AUTH GATE — Always shown on load, no sessionStorage -->
 <div class="auth-gate" id="auth-gate">
     <div class="auth-card">
