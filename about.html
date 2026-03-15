@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — Aura</title>
+    <meta name="description" content="Learn about Aura's mission to create premium, sustainable minimalist essentials.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .about-hero { height: 50vh; min-height: 350px; background: linear-gradient(rgba(0,0,0,.35),rgba(0,0,0,.55)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat; color: #fff; display: flex; align-items: center; justify-content: center; text-align: center; }
+        .about-section { padding: var(--space-8) 0; }
+        .about-section:nth-child(even) { background: var(--color-bg-alt); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); align-items: center; }
+        .about-img { width: 100%; height: 350px; object-fit: cover; border-radius: var(--radius-md); }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-4); }
+        .value-card { text-align: center; padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+        .value-icon { font-size: 2.5rem; margin-bottom: var(--space-2); }
+        .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-4); }
+        .team-card { text-align: center; }
+        .team-avatar { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 0 auto var(--space-2); display: block; background: var(--color-bg-alt); }
+        @media (max-width: 768px) { .about-grid, .values-grid, .team-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="announcement-bar">Free shipping on all US orders over $150 · <strong>New drops every Friday</strong></div>
+    <header class="site-header"><div class="container header-inner"><a href="index.html" class="logo">Aura.</a><nav class="nav-links"><a href="index.html#men" class="nav-link">Men</a><a href="index.html#women" class="nav-link">Women</a><a href="index.html#footwear" class="nav-link">Footwear</a><a href="index.html#accessories" class="nav-link">Accessories</a><a href="stories.html" class="nav-link">Stories</a></nav><div class="header-actions"><a href="admin.html" class="icon-btn" aria-label="Admin" title="Admin"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z"></path><circle cx="12" cy="12" r="3"></circle></svg></a><button class="icon-btn cart-icon" id="cart-toggle" aria-label="Cart"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg><span class="cart-count" id="header-cart-count">0</span></button><button class="icon-btn menu-toggle" aria-label="Menu"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></div></header>
+
+    <section class="about-hero">
+        <div class="container">
+            <h1 class="text-4xl mb-3">Our Story</h1>
+            <p class="text-lg" style="max-width:550px;margin:0 auto;opacity:.9;">We're building the future of everyday essentials — better materials, radical transparency, zero compromise.</p>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container about-grid">
+            <div>
+                <h2 class="text-2xl mb-3">Why We Started</h2>
+                <p class="text-muted mb-3">Aura was born in 2024 from a simple frustration: everyday clothing forces you to choose between comfort, durability, and sustainability. We refused to accept that trade-off.</p>
+                <p class="text-muted mb-3">After two years of research and development, we created a proprietary fabric blend made from responsibly sourced eucalyptus tree fibers and organic Pima cotton — highly breathable, odor-resistant, and luxuriously soft.</p>
+                <p class="text-muted">Today, Aura serves thousands of customers who believe that what you wear every day should be exceptional — without costing the earth.</p>
+            </div>
+            <img src="https://images.unsplash.com/photo-1544441893-675973e31985?w=800&q=80" alt="Our workshop" class="about-img">
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container text-center">
+            <h2 class="text-2xl mb-2">Our Values</h2>
+            <p class="text-muted mb-4">These principles guide every decision we make.</p>
+            <div class="values-grid">
+                <div class="value-card"><div class="value-icon">🌿</div><h3 class="fw-semibold mb-1">Sustainability First</h3><p class="text-sm text-muted">Every material is ethically sourced. Zero-waste packaging. Carbon-neutral shipping.</p></div>
+                <div class="value-card"><div class="value-icon">🔍</div><h3 class="fw-semibold mb-1">Radical Transparency</h3><p class="text-sm text-muted">We share our costs, margins, and factory details. No hidden markups.</p></div>
+                <div class="value-card"><div class="value-icon">✨</div><h3 class="fw-semibold mb-1">Premium Quality</h3><p class="text-sm text-muted">Each piece is designed to last years, not seasons. Quality over quantity.</p></div>
+                <div class="value-card"><div class="value-icon">🤝</div><h3 class="fw-semibold mb-1">Fair Labor</h3><p class="text-sm text-muted">Living wages, safe conditions, and dignity for every person in our supply chain.</p></div>
+                <div class="value-card"><div class="value-icon">♻️</div><h3 class="fw-semibold mb-1">Circular Design</h3><p class="text-sm text-muted">Products designed for longevity with a take-back program for recycling.</p></div>
+                <div class="value-card"><div class="value-icon">💚</div><h3 class="fw-semibold mb-1">Community</h3><p class="text-sm text-muted">1% of every sale supports environmental nonprofits worldwide.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <div class="container text-center">
+            <h2 class="text-2xl mb-2">Meet The Team</h2>
+            <p class="text-muted mb-4">The people behind Aura.</p>
+            <div class="team-grid">
+                <div class="team-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" alt="Alex" class="team-avatar"><h4 class="fw-semibold">Alex Rivera</h4><p class="text-sm text-muted">Founder & CEO</p></div>
+                <div class="team-card"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&q=80" alt="Maya" class="team-avatar"><h4 class="fw-semibold">Maya Chen</h4><p class="text-sm text-muted">Creative Director</p></div>
+                <div class="team-card"><img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=300&q=80" alt="Jordan" class="team-avatar"><h4 class="fw-semibold">Jordan Okafor</h4><p class="text-sm text-muted">Head of Sustainability</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="about-section text-center" style="background:var(--color-primary);color:#fff;padding:var(--space-8) 0;">
+        <div class="container">
+            <h2 class="text-2xl mb-3">Join the Movement</h2>
+            <p style="max-width:500px;margin:0 auto var(--space-4);opacity:.85;">Better basics for a better world. Shop Aura and feel the difference.</p>
+            <a href="index.html" class="btn btn-large" style="background:#fff;color:var(--color-primary);">Shop Now</a>
+        </div>
+    </section>
+
+    <footer class="site-footer"><div class="container footer-bottom"><p>&copy; 2026 Aura Inc.</p></div></footer>
+    <div class="cart-drawer-overlay" id="cart-overlay"></div><div class="cart-drawer" id="cart-drawer"><div class="cart-header flex justify-between align-center p-4 border-bottom"><h2 class="text-xl fw-bold">Your Cart</h2><button class="icon-btn" id="close-cart" style="font-size:1.5rem;">&times;</button></div><div class="cart-items p-4 flex-col gap-4" id="cart-items-container" style="overflow-y:auto;flex-grow:1;"></div><div class="cart-footer p-4 border-top"><div class="flex justify-between mb-4 fw-bold"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div><button class="btn btn-primary w-full btn-large" id="btn-mock-checkout">Checkout</button></div></div>
+    <script src="store.js"></script><script src="script.js"></script>
+</body>
+</html>

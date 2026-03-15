@@ -1,0 +1,145 @@
+<main>
+    <!-- Hero Slider -->
+    <section class="hero-slider" id="hero-slider">
+        <div class="hero-slider-track" id="hero-slider-track"></div>
+        <button class="slider-arrow slider-arrow--left" id="slider-prev" aria-label="Previous">‹</button>
+        <button class="slider-arrow slider-arrow--right" id="slider-next" aria-label="Next">›</button>
+        <div class="slider-dots" id="slider-dots"></div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits-row">
+        <div class="container grid grid-cols-1 md-grid-cols-3 gap-4 text-center">
+            <div class="benefit-item"><span class="benefit-icon">🌿</span><h3>Sustainable Materials</h3><p>Organic cotton & recycled fibers</p></div>
+            <div class="benefit-item"><span class="benefit-icon">📦</span><h3>Free Shipping</h3><p>On all orders over $150</p></div>
+            <div class="benefit-item"><span class="benefit-icon">⭐</span><h3>Premium Quality</h3><p>Designed to last a lifetime</p></div>
+        </div>
+    </section>
+
+    <!-- Brand Story Banner -->
+    <section class="brand-story-banner">
+        <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Aura Store" class="story-bg">
+        <div class="story-overlay">
+            <div class="container">
+                <div class="story-content">
+                    <h2>Crafted for the Modern Minimalist</h2>
+                    <p>Every piece in our collection is designed with intention — premium sustainable materials, timeless silhouettes, and radical transparency. This isn't fast fashion. This is your forever wardrobe.</p>
+                    <a href="/pages/about" class="btn btn-primary btn-large">Our Story</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Best Sellers -->
+    <section class="bestsellers-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Best Sellers</h2>
+                <p class="text-muted">Our most-loved pieces</p>
+            </div>
+            <div class="bestsellers-grid" id="bestsellers-grid"></div>
+        </div>
+    </section>
+
+    <!-- Men -->
+    <section id="men" class="category-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Men's Collection</h2>
+                <a href="/pages/collection#men" class="section-link">See More →</a>
+            </div>
+            <div class="scroll-belt" id="home-men-belt"></div>
+        </div>
+    </section>
+
+    <!-- Women -->
+    <section id="women" class="category-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Women's Collection</h2>
+                <a href="/pages/collection#women" class="section-link">See More →</a>
+            </div>
+            <div class="scroll-belt" id="home-women-belt"></div>
+        </div>
+    </section>
+
+    <!-- Footwear -->
+    <section id="footwear" class="category-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Footwear</h2>
+                <a href="/pages/collection#footwear" class="section-link">See More →</a>
+            </div>
+            <div class="filter-tabs" id="footwear-filter">
+                <button class="filter-tab active" data-filter="all">All</button>
+                <button class="filter-tab" data-filter="men">Men</button>
+                <button class="filter-tab" data-filter="women">Women</button>
+            </div>
+            <div class="scroll-belt" id="home-footwear-belt"></div>
+        </div>
+    </section>
+
+    <!-- Accessories -->
+    <section id="accessories" class="category-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Accessories</h2>
+                <a href="/pages/collection#accessories" class="section-link">See More →</a>
+            </div>
+            <div class="scroll-belt" id="home-accessories-belt"></div>
+        </div>
+    </section>
+
+    <!-- Why Choose Aura -->
+    <section class="why-choose-section">
+        <div class="container text-center">
+            <h2 class="section-title">Why Choose Aura</h2>
+            <p class="text-muted">The difference is in the details.</p>
+            <div class="why-choose-grid">
+                <div class="why-card"><div class="why-icon">🔒</div><h3>Secure Payments</h3><p>256-bit SSL encryption protects every transaction. Shop with confidence.</p></div>
+                <div class="why-card"><div class="why-icon">🚚</div><h3>Free Shipping</h3><p>Complimentary standard shipping on all US orders over $150.</p></div>
+                <div class="why-card"><div class="why-icon">↩️</div><h3>Easy Returns</h3><p>30-day hassle-free returns. No questions asked.</p></div>
+                <div class="why-card"><div class="why-icon">🌿</div><h3>100% Sustainable</h3><p>Ethically sourced materials. Carbon-neutral shipping. Zero waste packaging.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Belt -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="section-title text-center mb-8">What Our Customers Say</h2>
+            <div class="scroll-belt review-belt" id="reviews-belt"></div>
+        </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <section class="feedback-section">
+        <div class="container">
+            <div class="feedback-card">
+                <h2 class="text-xl mb-2 text-center">Share Your Experience</h2>
+                <p class="text-sm text-muted text-center mb-4">Your feedback helps us improve & appears as a review!</p>
+                <form id="site-feedback-form" class="feedback-form">
+                    <div class="grid grid-cols-1 md-grid-cols-3 gap-3">
+                        <div class="form-group"><label class="form-label">Your Name</label><input type="text" id="fb-name" class="form-control" required placeholder="Jane Smith"></div>
+                        <div class="form-group"><label class="form-label">Rating</label><select id="fb-rating" class="form-control" required><option value="5">★★★★★ Excellent</option><option value="4">★★★★☆ Great</option><option value="3">★★★☆☆ Good</option><option value="2">★★☆☆☆ Fair</option><option value="1">★☆☆☆☆ Poor</option></select></div>
+                        <div class="form-group" style="display:flex; align-items:flex-end;"><button type="submit" class="btn btn-primary w-full">Submit</button></div>
+                    </div>
+                    <div class="form-group mt-2"><label class="form-label">Your Feedback</label><textarea id="fb-comment" class="form-control" rows="2" required placeholder="Tell us about your experience..."></textarea></div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Email Popup -->
+<div id="email-popup-modal" class="email-popup-modal" style="display:none;">
+    <div class="email-popup-content">
+        <button class="email-popup-close" id="close-email-popup">&times;</button>
+        <h2 style="font-family:'Playfair Display',serif;">Get 10% Off</h2>
+        <p>Subscribe to our newsletter and get <strong>10% off</strong> your first order. Use code <strong>WELCOME10</strong> at checkout.</p>
+        <form id="email-popup-form">
+            <input type="email" placeholder="Enter your email" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+    </div>
+</div>

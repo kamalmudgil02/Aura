@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura — Premium Minimalist Essentials</title>
+    <meta name="description" content="Discover premium minimalist clothing, footwear, and accessories.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="announcement-bar">
+        Free shipping on all US orders over $150 · <strong>New drops every Friday</strong>
+    </div>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="index.html" class="logo">Aura.</a>
+            <nav class="nav-links" id="main-nav">
+                <a href="#men" class="nav-link">Men</a>
+                <a href="#women" class="nav-link">Women</a>
+                <a href="#footwear" class="nav-link">Footwear</a>
+                <a href="#accessories" class="nav-link">Accessories</a>
+                <a href="stories.html" class="nav-link">Stories</a>
+            </nav>
+            <div class="header-actions">
+                <button class="icon-btn" id="search-toggle-btn" aria-label="Search">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </button>
+                <a href="admin.html" class="icon-btn" aria-label="Admin" title="Admin Dashboard">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z">
+                        </path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </a>
+                <button class="icon-btn cart-icon" id="cart-toggle" aria-label="Cart">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
+                    </svg>
+                    <span class="cart-count" id="header-cart-count">0</span>
+                </button>
+                <button class="icon-btn menu-toggle" aria-label="Menu">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Search Overlay -->
+        <div id="search-overlay" class="search-overlay">
+            <div class="container flex gap-3 align-center">
+                <input type="text" id="global-search-input" class="form-control" placeholder="Search products..."
+                    style="flex:1;">
+                <button class="icon-btn" id="close-search-btn" aria-label="Close">
+                    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            <div id="search-results-container" class="container mt-4" style="display:none;">
+                <h4 class="text-xs text-muted text-uppercase mb-3">Results</h4>
+                <div id="search-results-grid" class="grid grid-cols-2 md-grid-cols-4 gap-3"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu">
+        <a href="#men" class="nav-link">Men</a>
+        <a href="#women" class="nav-link">Women</a>
+        <a href="#footwear" class="nav-link">Footwear</a>
+        <a href="#accessories" class="nav-link">Accessories</a>
+        <a href="stories.html" class="nav-link">Stories</a>
+    </div>
+
+    <main>
+        <!-- Hero Slider -->
+        <section class="hero-slider" id="hero-slider">
+            <div class="hero-slider-track" id="hero-slider-track"></div>
+            <button class="slider-arrow slider-arrow--left" id="slider-prev" aria-label="Previous">‹</button>
+            <button class="slider-arrow slider-arrow--right" id="slider-next" aria-label="Next">›</button>
+            <div class="slider-dots" id="slider-dots"></div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="benefits-row">
+            <div class="container grid grid-cols-1 md-grid-cols-3 gap-4 text-center">
+                <div class="benefit-item"><span class="benefit-icon">🌿</span>
+                    <h3>Sustainable Materials</h3>
+                    <p>Organic cotton & recycled fibers</p>
+                </div>
+                <div class="benefit-item"><span class="benefit-icon">📦</span>
+                    <h3>Free Shipping</h3>
+                    <p>On all orders over $150</p>
+                </div>
+                <div class="benefit-item"><span class="benefit-icon">⭐</span>
+                    <h3>Premium Quality</h3>
+                    <p>Designed to last a lifetime</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Brand Story Banner -->
+        <section class="brand-story-banner">
+            <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80"
+                alt="Aura Store" class="story-bg">
+            <div class="story-overlay">
+                <div class="container">
+                    <div class="story-content">
+                        <h2>Crafted for the Modern Minimalist</h2>
+                        <p>Every piece in our collection is designed with intention — premium sustainable materials,
+                            timeless silhouettes, and radical transparency. This isn't fast fashion. This is your
+                            forever wardrobe.</p>
+                        <a href="about.html" class="btn btn-primary btn-large">Our Story</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Best Sellers -->
+        <section class="bestsellers-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Best Sellers</h2>
+                    <p class="text-muted">Our most-loved pieces</p>
+                </div>
+                <div class="bestsellers-grid" id="bestsellers-grid"></div>
+            </div>
+        </section>
+
+        <!-- Men -->
+        <section id="men" class="category-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Men's Collection</h2>
+                    <a href="collection.html#men" class="section-link">See More →</a>
+                </div>
+                <div class="scroll-belt" id="home-men-belt"></div>
+            </div>
+        </section>
+
+        <!-- Women -->
+        <section id="women" class="category-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Women's Collection</h2>
+                    <a href="collection.html#women" class="section-link">See More →</a>
+                </div>
+                <div class="scroll-belt" id="home-women-belt"></div>
+            </div>
+        </section>
+
+        <!-- Footwear -->
+        <section id="footwear" class="category-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Footwear</h2>
+                    <a href="collection.html#footwear" class="section-link">See More →</a>
+                </div>
+                <div class="filter-tabs" id="footwear-filter">
+                    <button class="filter-tab active" data-filter="all">All</button>
+                    <button class="filter-tab" data-filter="men">Men</button>
+                    <button class="filter-tab" data-filter="women">Women</button>
+                </div>
+                <div class="scroll-belt" id="home-footwear-belt"></div>
+            </div>
+        </section>
+
+        <!-- Accessories -->
+        <section id="accessories" class="category-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Accessories</h2>
+                    <a href="collection.html#accessories" class="section-link">See More →</a>
+                </div>
+                <div class="scroll-belt" id="home-accessories-belt"></div>
+            </div>
+        </section>
+
+        <!-- Why Choose Aura -->
+        <section class="why-choose-section">
+            <div class="container text-center">
+                <h2 class="section-title">Why Choose Aura</h2>
+                <p class="text-muted">The difference is in the details.</p>
+                <div class="why-choose-grid">
+                    <div class="why-card">
+                        <div class="why-icon">🔒</div>
+                        <h3>Secure Payments</h3>
+                        <p>256-bit SSL encryption protects every transaction. Shop with confidence.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">🚚</div>
+                        <h3>Free Shipping</h3>
+                        <p>Complimentary standard shipping on all US orders over $150.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">↩️</div>
+                        <h3>Easy Returns</h3>
+                        <p>30-day hassle-free returns. No questions asked.</p>
+                    </div>
+                    <div class="why-card">
+                        <div class="why-icon">🌿</div>
+                        <h3>100% Sustainable</h3>
+                        <p>Ethically sourced materials. Carbon-neutral shipping. Zero waste packaging.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reviews Belt -->
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title text-center mb-8">What Our Customers Say</h2>
+                <div class="scroll-belt review-belt" id="reviews-belt"></div>
+            </div>
+        </section>
+
+        <!-- Feedback Form -->
+        <section class="feedback-section">
+            <div class="container">
+                <div class="feedback-card">
+                    <h2 class="text-xl mb-2 text-center">Share Your Experience</h2>
+                    <p class="text-sm text-muted text-center mb-4">Your feedback helps us improve & appears as a review!
+                    </p>
+                    <form id="site-feedback-form" class="feedback-form">
+                        <div class="grid grid-cols-1 md-grid-cols-3 gap-3">
+                            <div class="form-group">
+                                <label class="form-label">Your Name</label>
+                                <input type="text" id="fb-name" class="form-control" required placeholder="Jane Smith">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Rating</label>
+                                <select id="fb-rating" class="form-control" required>
+                                    <option value="5">★★★★★ Excellent</option>
+                                    <option value="4">★★★★☆ Great</option>
+                                    <option value="3">★★★☆☆ Good</option>
+                                    <option value="2">★★☆☆☆ Fair</option>
+                                    <option value="1">★☆☆☆☆ Poor</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="display:flex; align-items:flex-end;">
+                                <button type="submit" class="btn btn-primary w-full">Submit</button>
+                            </div>
+                        </div>
+                        <div class="form-group mt-2">
+                            <label class="form-label">Your Feedback</label>
+                            <textarea id="fb-comment" class="form-control" rows="2" required
+                                placeholder="Tell us about your experience..."></textarea>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-section">
+                <h4>Shop</h4>
+                <div class="footer-links"><a href="collection.html#men">Men's</a><a
+                        href="collection.html#women">Women's</a><a href="collection.html#footwear">Footwear</a><a
+                        href="collection.html#accessories">Accessories</a></div>
+            </div>
+            <div class="footer-section">
+                <h4>Help</h4>
+                <div class="footer-links"><a href="faq.html">FAQ</a><a href="contact.html">Contact Us</a><a
+                        href="shipping.html">Shipping Info</a><a href="returns.html">Returns & Exchange</a><a
+                        href="track.html">Track Order</a></div>
+            </div>
+            <div class="footer-section">
+                <h4>About</h4>
+                <div class="footer-links"><a href="about.html">About Us</a><a href="stories.html">Our Stories</a><a
+                        href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a></div>
+            </div>
+            <div class="footer-section">
+                <h4>Stay in the loop</h4>
+                <p class="text-sm mb-2 text-muted">Get updates on new releases.</p>
+                <form class="newsletter-form"
+                    onsubmit="event.preventDefault(); this.querySelector('input').value=''; alert('Subscribed! ✓');">
+                    <input type="email" placeholder="Email address" class="newsletter-input" required><button
+                        type="submit" class="btn btn-primary newsletter-btn">→</button></form>
+                <div class="social-links mt-3"><a href="#" aria-label="Instagram" class="social-link"><svg width="20"
+                            height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                        </svg></a><a href="#" aria-label="Twitter/X" class="social-link"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg></a><a href="#" aria-label="TikTok" class="social-link"><svg width="20" height="20"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1v-3.51a6.37 6.37 0 00-.79-.05A6.34 6.34 0 003.15 15.2a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 005.58 2.17V2.44a4.85 4.85 0 01-.01 4.25z" />
+                        </svg></a></div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 Aura Inc. All rights reserved.</p>
+            <div class="flex gap-3"><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a></div>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+    <div class="cart-drawer" id="cart-drawer">
+        <div class="cart-header flex justify-between align-center p-4 border-bottom">
+            <h2 class="text-xl fw-bold">Your Cart</h2><button class="icon-btn" id="close-cart"
+                style="font-size:1.5rem;">&times;</button>
+        </div>
+        <div class="cart-items p-4 flex-col gap-4" id="cart-items-container" style="overflow-y:auto; flex-grow:1;">
+        </div>
+        <div class="cart-footer p-4 border-top">
+            <div class="discount-row mb-3"><input type="text" id="discount-code-input" class="form-control"
+                    placeholder="Discount code" style="flex:1;font-size:13px;"><button class="btn btn-outline"
+                    id="apply-discount-btn" style="margin-left:8px;padding:8px 16px;">Apply</button></div>
+            <p id="discount-result" class="text-xs mb-2" style="display:none;"></p>
+            <div id="cart-upsells" class="mb-3" style="display:none;">
+                <p class="text-xs fw-semibold text-muted text-uppercase mb-2">You May Also Like</p>
+                <div id="upsell-items" class="flex gap-2" style="overflow-x:auto;"></div>
+            </div>
+            <div class="flex justify-between mb-4 fw-bold"><span>Subtotal</span><span id="cart-subtotal">$0.00</span>
+            </div>
+            <p class="text-xs text-muted mb-3 text-center">Taxes and shipping calculated at checkout.</p>
+            <button class="btn btn-primary w-full btn-large" id="btn-mock-checkout">Checkout</button>
+            <p id="checkout-msg" class="text-xs text-center mt-2" style="display:none; color:var(--color-primary);"></p>
+        </div>
+    </div>
+
+    <script src="store.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

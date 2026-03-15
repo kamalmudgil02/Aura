@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — Aura</title>
+    <meta name="description" content="Get in touch with Aura's support team. We're here to help.">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .contact-hero { background: var(--color-bg-alt); padding: var(--space-8) 0; text-align: center; border-bottom: 1px solid var(--color-border); }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-6); max-width: 900px; margin: 0 auto; padding: var(--space-6) var(--space-3); }
+        .contact-info-card { padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md); text-align: center; }
+        .contact-info-card .icon { font-size: 2rem; margin-bottom: var(--space-2); }
+        .info-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-3); margin-bottom: var(--space-6); }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } .info-cards { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="announcement-bar">Free shipping on all US orders over $150 · <strong>New drops every Friday</strong></div>
+    <header class="site-header"><div class="container header-inner"><a href="index.html" class="logo">Aura.</a><nav class="nav-links"><a href="index.html#men" class="nav-link">Men</a><a href="index.html#women" class="nav-link">Women</a><a href="index.html#footwear" class="nav-link">Footwear</a><a href="index.html#accessories" class="nav-link">Accessories</a><a href="stories.html" class="nav-link">Stories</a></nav><div class="header-actions"><a href="admin.html" class="icon-btn" aria-label="Admin" title="Admin"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.573-1.066z"></path><circle cx="12" cy="12" r="3"></circle></svg></a><button class="icon-btn cart-icon" id="cart-toggle" aria-label="Cart"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg><span class="cart-count" id="header-cart-count">0</span></button><button class="icon-btn menu-toggle" aria-label="Menu"><svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"></path></svg></button></div></div></header>
+
+    <section class="contact-hero">
+        <h1 class="text-3xl mb-2">Contact Us</h1>
+        <p class="text-muted">We'd love to hear from you. Reach out anytime.</p>
+    </section>
+
+    <div class="container" style="max-width:900px;padding:var(--space-6) var(--space-3);">
+        <div class="info-cards">
+            <div class="contact-info-card"><div class="icon">📧</div><h3 class="fw-semibold text-sm">Email</h3><p class="text-sm text-muted">support@aura.com</p></div>
+            <div class="contact-info-card"><div class="icon">📞</div><h3 class="fw-semibold text-sm">Phone</h3><p class="text-sm text-muted">+1 (800) 555-AURA</p></div>
+            <div class="contact-info-card"><div class="icon">🕐</div><h3 class="fw-semibold text-sm">Hours</h3><p class="text-sm text-muted">Mon–Fri, 9am–6pm EST</p></div>
+        </div>
+
+        <div style="border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-5);">
+            <h2 class="text-xl mb-4">Send Us a Message</h2>
+            <form id="contact-form">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);">
+                    <div class="form-group"><label class="form-label">Your Name *</label><input type="text" class="form-control" id="c-name" required placeholder="Jane Smith"></div>
+                    <div class="form-group"><label class="form-label">Email *</label><input type="email" class="form-control" id="c-email" required placeholder="you@example.com"></div>
+                </div>
+                <div class="form-group"><label class="form-label">Subject *</label>
+                    <select class="form-control" id="c-subject" required>
+                        <option value="">Select a topic</option>
+                        <option>Order Inquiry</option>
+                        <option>Product Question</option>
+                        <option>Shipping & Delivery</option>
+                        <option>Returns & Exchanges</option>
+                        <option>Wholesale Inquiry</option>
+                        <option>Press & Media</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">Order ID <span class="text-muted">(if applicable)</span></label><input type="text" class="form-control" id="c-order" placeholder="ORD-12345"></div>
+                <div class="form-group"><label class="form-label">Message *</label><textarea class="form-control" id="c-message" rows="5" required placeholder="How can we help?"></textarea></div>
+                <button type="submit" class="btn btn-primary btn-large w-full">Send Message</button>
+            </form>
+            <div id="contact-success" style="display:none;text-align:center;padding:var(--space-6);">
+                <div style="font-size:3rem;">✓</div>
+                <h3 class="text-xl mb-2" style="color:var(--color-success);">Message Sent!</h3>
+                <p class="text-muted">We'll get back to you within 24 hours. Check your email for a confirmation.</p>
+                <a href="index.html" class="btn btn-outline mt-4">Back to Store</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="site-footer"><div class="container footer-bottom"><p>&copy; 2026 Aura Inc.</p></div></footer>
+    <div class="cart-drawer-overlay" id="cart-overlay"></div><div class="cart-drawer" id="cart-drawer"><div class="cart-header flex justify-between align-center p-4 border-bottom"><h2 class="text-xl fw-bold">Your Cart</h2><button class="icon-btn" id="close-cart" style="font-size:1.5rem;">&times;</button></div><div class="cart-items p-4 flex-col gap-4" id="cart-items-container" style="overflow-y:auto;flex-grow:1;"></div><div class="cart-footer p-4 border-top"><div class="flex justify-between mb-4 fw-bold"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div><button class="btn btn-primary w-full btn-large" id="btn-mock-checkout">Checkout</button></div></div>
+    <script src="store.js"></script><script src="script.js"></script>
+    <script>
+    document.getElementById('contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Store the inquiry
+        const inquiries = JSON.parse(localStorage.getItem('aura_inquiries') || '[]');
+        inquiries.push({ name: document.getElementById('c-name').value, email: document.getElementById('c-email').value, subject: document.getElementById('c-subject').value, orderId: document.getElementById('c-order').value, message: document.getElementById('c-message').value, date: new Date().toISOString() });
+        localStorage.setItem('aura_inquiries', JSON.stringify(inquiries));
+        this.style.display = 'none';
+        document.getElementById('contact-success').style.display = 'block';
+    });
+    </script>
+</body>
+</html>

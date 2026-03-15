@@ -1,0 +1,60 @@
+<section class="track-hero"><h1 class="text-3xl mb-2">Track Your Order</h1><p class="text-muted">Enter your order details to see real-time status.</p></section>
+
+    <div class="track-container">
+        <div class="track-form-card" id="track-form-card">
+            <div class="form-group"><label class="form-label">Order ID</label><input type="text" class="form-control" id="track-order-id" placeholder="e.g. ORD-45678" required></div>
+            <div class="form-group"><label class="form-label">Email Address</label><input type="email" class="form-control" id="track-email" placeholder="you@example.com" required></div>
+            <p class="text-xs text-muted mb-3" id="track-error" style="display:none;color:#d93025;">Order not found. Please check your details and try again.</p>
+            <button class="btn btn-primary w-full btn-large" id="btn-track">Track Order</button>
+            <p class="text-xs text-muted text-center mt-3">Your Order ID can be found in your confirmation email.</p>
+        </div>
+
+        <div class="order-result" id="order-result" style="display:none;">
+            <div class="order-summary-card">
+                <div class="flex justify-between align-center mb-2">
+                    <span class="fw-bold" id="result-order-id">ORD-00000</span>
+                    <span class="text-xs" style="background:var(--color-success);color:#fff;padding:3px 10px;border-radius:12px;" id="result-status">Paid</span>
+                </div>
+                <div class="flex justify-between text-sm text-muted">
+                    <span>Placed: <span id="result-date">—</span></span>
+                    <span>Total: <span class="fw-bold" style="color:var(--color-text);" id="result-total">$0.00</span></span>
+                </div>
+            </div>
+
+            <h3 class="text-sm fw-semibold text-uppercase text-muted mb-3">Order Timeline</h3>
+            <div class="timeline">
+                <div class="timeline-step completed"><h4>Order Placed</h4><p id="tl-placed">—</p></div>
+                <div class="timeline-step completed"><h4>Payment Confirmed</h4><p id="tl-payment">Payment received</p></div>
+                <div class="timeline-step active"><h4>Processing</h4><p>Your order is being prepared for shipment</p></div>
+                <div class="timeline-step"><h4>Shipped</h4><p>Tracking number will be emailed to you</p></div>
+                <div class="timeline-step"><h4>Delivered</h4><p>Estimated delivery: 5–7 business days</p></div>
+            </div>
+
+            <div class="flex gap-3 mt-4">
+                <button class="btn btn-outline flex-1" onclick="document.getElementById('order-result').style.display='none';document.getElementById('track-form-card').style.display='block';">Track Another</button>
+                <a href="/pages/contact" class="btn btn-primary flex-1 text-center">Need Help?</a>
+            </div>
+        </div>
+    </div>
+
+    
+    
+    
+    <script>
+    document.getElementById('btn-track').addEventListener('click', function() {
+        const orderId = document.getElementById('track-order-id').value.trim();
+        const email = document.getElementById('track-email').value.trim();
+        if (!orderId || !email) { alert('Please fill in both fields.'); return; }
+        const orders = window.Store ? window.Store.getOrders() : [];
+        const order = orders.find(o => o.id.toLowerCase() === orderId.toLowerCase() && o.customerEmail.toLowerCase() === email.toLowerCase());
+        if (!order) { document.getElementById('track-error').style.display = 'block'; return; }
+        document.getElementById('track-error').style.display = 'none';
+        document.getElementById('track-form-card').style.display = 'none';
+        document.getElementById('order-result').style.display = 'block';
+        document.getElementById('result-order-id').textContent = order.id;
+        document.getElementById('result-status').textContent = order.status;
+        document.getElementById('result-total').textContent = '$' + order.total.toFixed(2);
+        document.getElementById('result-date').textContent = new Date(order.date).toLocaleDateString('en-US', { year:'numeric', month:'long', day:'numeric' });
+        document.getElementById('tl-placed').textContent = new Date(order.date).toLocaleString('en-US', { dateStyle:'medium', timeStyle:'short' });
+    });
+    </script>

@@ -1,0 +1,331 @@
+<!-- AUTH GATE — Always shown on load, no sessionStorage -->
+<div class="auth-gate" id="auth-gate">
+    <div class="auth-card">
+        <span class="logo">Aura.</span>
+        <p class="text-muted mb-4">Enter admin PIN to continue</p>
+        <form id="auth-form">
+            <input type="password" id="auth-pin" class="form-control mb-3 text-center" placeholder="Enter PIN" maxlength="10" required style="font-size: var(--font-size-xl); letter-spacing: 0.2em;">
+            <button type="submit" class="btn btn-primary w-full btn-large">Unlock Dashboard</button>
+            <p class="auth-error" id="auth-error">Incorrect PIN. Try again.</p>
+        </form>
+    </div>
+</div>
+
+<!-- DASHBOARD (hidden until auth) -->
+<div class="admin-layout" id="admin-dashboard" style="display:none;">
+    <aside class="admin-sidebar">
+        <h2 class="logo mb-6">Aura Admin</h2>
+        <nav id="admin-nav">
+            <a href="#" class="admin-nav-link active" data-view="products">📦 Products</a>
+            <a href="#" class="admin-nav-link" data-view="orders">🧾 Orders</a>
+            <a href="#" class="admin-nav-link" data-view="customers">👥 Customers</a>
+            <a href="/" class="admin-nav-link" style="margin-top: var(--space-4); border-top: 1px solid var(--color-border); padding-top: var(--space-3);">← Back to Store</a>
+        </nav>
+    </aside>
+    <main class="admin-main">
+        <div id="view-products" class="admin-view" style="display:block;">
+            <div class="flex justify-between align-center mb-6"><h1 class="text-2xl">Products</h1><div class="flex gap-2"><button class="btn btn-outline" id="btn-export-csv">📥 Export CSV</button><button class="btn btn-primary" id="open-add-modal">+ Add Product</button></div></div>
+            <div class="admin-card"><table id="products-table"><thead><tr><th width="50">Image</th><th>Title</th><th>Category</th><th>Sizes</th><th>Colors</th><th>Price</th><th width="80">Actions</th></tr></thead><tbody id="products-tbody"></tbody></table></div>
+        </div>
+        <div id="view-orders" class="admin-view" style="display:none;">
+            <div class="mb-6"><h1 class="text-2xl">Orders</h1></div>
+            <div class="admin-card"><table><thead><tr><th>Order ID</th><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody id="orders-tbody"></tbody></table></div>
+        </div>
+        <div id="view-customers" class="admin-view" style="display:none;">
+            <div class="mb-6"><h1 class="text-2xl">Customers</h1></div>
+            <div class="admin-card"><table><thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Spent</th><th>Joined</th></tr></thead><tbody id="customers-tbody"></tbody></table></div>
+        </div>
+    </main>
+</div>
+
+<!-- Product Modal -->
+<div class="modal-overlay" id="product-modal">
+    <div class="modal-content">
+        <div class="flex justify-between align-center mb-4"><h2 class="text-xl" id="modal-title">Add New Product</h2><button class="action-btn" id="close-modal" style="font-size:1.5rem;">&times;</button></div>
+        <form id="product-form">
+            <input type="hidden" id="prod-id">
+            <div class="form-group"><label class="form-label">Title</label><input type="text" id="prod-title" class="form-control" required placeholder="Classic Oxford Shirt"></div>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="form-group"><label class="form-label">Price ($)</label><input type="number" id="prod-price" class="form-control" required min="0" step="0.01" placeholder="45.00"></div>
+                <div class="form-group"><label class="form-label">Category</label><select id="prod-category" class="form-control" required><option value="men">Men</option><option value="women">Women</option><option value="footwear">Footwear</option><option value="accessories">Accessories</option></select></div>
+            </div>
+            <div class="form-group" id="gender-group" style="display:none;"><label class="form-label">Footwear Gender</label><select id="prod-gender" class="form-control"><option value="men">Men's</option><option value="women">Women's</option><option value="unisex">Unisex</option></select></div>
+            <div class="form-group"><label class="form-label">Available Sizes</label><div class="sizes-grid" id="sizes-grid"></div></div>
+
+            <!-- Color Variants Builder -->
+            <div class="form-group">
+                <label class="form-label">Color Variants & Images</label>
+                <div id="variants-container"></div>
+                <button type="button" class="btn btn-outline text-xs mt-2" id="btn-add-variant" style="padding:6px 16px;">+ Add Color Variant</button>
+            </div>
+
+            <div class="form-group"><label class="form-label">Description</label><textarea id="prod-desc" class="form-control" rows="3" required></textarea></div>
+            <div class="form-group"><label class="flex align-center gap-2" style="cursor:pointer;"><input type="checkbox" id="prod-isnew"><span class="text-sm">Mark as "New Arrival"</span></label></div>
+            <div class="flex justify-between mt-4"><button type="button" class="btn btn-outline" id="btn-cancel">Cancel</button><button type="submit" class="btn btn-primary">Save Product</button></div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="delete-modal" style="z-index:1005;">
+    <div class="modal-content" style="max-width:400px; text-align:center;">
+        <h2 class="text-xl mb-2">Confirm Deletion</h2>
+        <p class="text-muted mb-6">This action cannot be undone.</p>
+        <div class="flex justify-center gap-4"><button class="btn btn-outline" id="btn-cancel-delete">Cancel</button><button class="btn btn-primary" id="btn-confirm-delete" style="background:#d93025; border-color:#d93025;">Delete</button></div>
+    </div>
+</div>
+
+<script src="store.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const authGate = document.getElementById('auth-gate');
+    const dashboard = document.getElementById('admin-dashboard');
+    const authForm = document.getElementById('auth-form');
+    const authError = document.getElementById('auth-error');
+
+    // NO sessionStorage — always ask PIN
+    authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const pin = document.getElementById('auth-pin').value;
+        if (window.Store && window.Store.verifyAdmin(pin)) {
+            authGate.style.display = 'none';
+            dashboard.style.display = 'flex';
+            renderProducts();
+        } else {
+            authError.style.display = 'block';
+            document.getElementById('auth-pin').value = '';
+        }
+    });
+
+    // Tab nav
+    const navLinks = document.querySelectorAll('.admin-nav-link[data-view]');
+    const views = document.querySelectorAll('.admin-view');
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); navLinks.forEach(l=>l.classList.remove('active')); views.forEach(v=>v.style.display='none');
+            link.classList.add('active'); document.getElementById('view-'+link.dataset.view).style.display='block';
+            if (link.dataset.view==='products') renderProducts();
+            if (link.dataset.view==='orders') renderOrders();
+            if (link.dataset.view==='customers') renderCustomers();
+        });
+    });
+
+    // Sizes
+    const clothingSizes = ['XS','S','M','L','XL','XXL'];
+    const footwearSizes = ['5','6','7','8','9','10','11','12'];
+    const accessorySizes = ['One Size'];
+    const sizesGrid = document.getElementById('sizes-grid');
+    const categorySelect = document.getElementById('prod-category');
+    const genderGroup = document.getElementById('gender-group');
+    function renderSizeOpts(cat, pre) {
+        let opts = clothingSizes; if(cat==='footwear') opts=footwearSizes; else if(cat==='accessories') opts=accessorySizes;
+        sizesGrid.innerHTML = opts.map(s => `<label class="size-check"><input type="checkbox" name="prod-sizes" value="${s}" ${pre&&pre.includes(s)?'checked':''}>${s}</label>`).join('');
+    }
+    categorySelect.addEventListener('change', () => { renderSizeOpts(categorySelect.value); genderGroup.style.display=categorySelect.value==='footwear'?'block':'none'; });
+    renderSizeOpts('men');
+
+    // ========= COLOR VARIANT BUILDER =========
+    const variantsContainer = document.getElementById('variants-container');
+    let variantCounter = 0;
+
+    function addVariantRow(data) {
+        const idx = variantCounter++;
+        const div = document.createElement('div');
+        div.className = 'variant-row';
+        div.id = 'variant-' + idx;
+        div.innerHTML = `
+            <div class="variant-header">
+                <input type="color" class="variant-color-picker" value="${data?.color||'#888888'}" style="width:32px;height:32px;border:none;cursor:pointer;padding:0;">
+                <input type="text" class="form-control variant-color-name" placeholder="Color name (e.g. Navy)" value="${data?.colorName||''}" style="flex:1;">
+                <button type="button" class="action-btn remove-variant-btn" title="Remove">&times;</button>
+            </div>
+            <div>
+                <div class="variant-images" id="variant-images-${idx}">
+                    ${data?.images ? data.images.map(img => `<div class="variant-img-thumb" data-url="${img}" style="position:relative;"><img src="${img}"><button type="button" class="action-btn thumb-remove" style="position:absolute;top:-4px;right:-4px;font-size:12px;background:#fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2);width:18px;height:18px;">&times;</button></div>`).join('') : ''}
+                </div>
+                <div class="flex gap-2 mt-1 align-center" style="flex-wrap:wrap;">
+                    <input type="url" class="form-control variant-image-url" placeholder="Paste image URL" style="flex:1; min-width:140px; padding:6px 8px; font-size:var(--font-size-xs);">
+                    <button type="button" class="btn btn-outline text-xs add-img-btn" style="padding:4px 12px; white-space:nowrap;">Add URL</button>
+                    <label class="btn btn-outline text-xs" style="padding:4px 12px; cursor:pointer; white-space:nowrap;">📁 Upload
+                        <input type="file" class="variant-file-input" accept="image/*" multiple style="display:none;">
+                    </label>
+                </div>
+            </div>
+        `;
+        variantsContainer.appendChild(div);
+
+        // Helper: add a thumbnail to the variant
+        function addThumb(container, url) {
+            const thumb = document.createElement('div');
+            thumb.className = 'variant-img-thumb';
+            thumb.dataset.url = url;
+            thumb.style.position = 'relative';
+            thumb.innerHTML = '<img src="' + url + '"><button type="button" class="action-btn thumb-remove" style="position:absolute;top:-4px;right:-4px;font-size:12px;background:#fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.2);width:18px;height:18px;">&times;</button>';
+            thumb.querySelector('.thumb-remove').addEventListener('click', () => thumb.remove());
+            container.appendChild(thumb);
+        }
+
+        // Remove variant
+        div.querySelector('.remove-variant-btn').addEventListener('click', () => div.remove());
+
+        // Add image via URL
+        div.querySelector('.add-img-btn').addEventListener('click', () => {
+            const urlInput = div.querySelector('.variant-image-url');
+            const url = urlInput.value.trim();
+            if (!url) return;
+            addThumb(div.querySelector('.variant-images'), url);
+            urlInput.value = '';
+        });
+
+        // Add image via File Upload — COMPRESS first to avoid localStorage quota
+        div.querySelector('.variant-file-input').addEventListener('change', function(e) {
+            const files = e.target.files;
+            const container = div.querySelector('.variant-images');
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    // Compress image via canvas
+                    const img = new Image();
+                    img.onload = function() {
+                        const canvas = document.createElement('canvas');
+                        const MAX = 400; // max dimension px
+                        let w = img.width, h = img.height;
+                        if (w > h) { if (w > MAX) { h = h * MAX / w; w = MAX; } }
+                        else { if (h > MAX) { w = w * MAX / h; h = MAX; } }
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        const compressed = canvas.toDataURL('image/jpeg', 0.5);
+                        addThumb(container, compressed);
+                    };
+                    img.src = ev.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+            this.value = '';
+        });
+
+        // Remove existing image thumbs
+        div.querySelectorAll('.thumb-remove').forEach(btn => {
+            btn.addEventListener('click', () => btn.parentElement.remove());
+        });
+    }
+
+    document.getElementById('btn-add-variant').addEventListener('click', () => addVariantRow());
+
+    function collectVariants() {
+        const rows = variantsContainer.querySelectorAll('.variant-row');
+        const variants = [];
+        rows.forEach(row => {
+            const color = row.querySelector('.variant-color-picker').value;
+            const colorName = row.querySelector('.variant-color-name').value.trim();
+            if (!colorName) return;
+            const images = [];
+            row.querySelectorAll('.variant-img-thumb').forEach(t => { if (t.dataset.url) images.push(t.dataset.url); });
+            if (images.length > 0) variants.push({ color, colorName, images });
+        });
+        return variants;
+    }
+
+    // ========= PRODUCTS CRUD =========
+    const tbody = document.getElementById('products-tbody');
+    const modal = document.getElementById('product-modal');
+    const form = document.getElementById('product-form');
+    const deleteModal = document.getElementById('delete-modal');
+    const idInput = document.getElementById('prod-id');
+    const titleInput = document.getElementById('prod-title');
+    const priceInput = document.getElementById('prod-price');
+    const descInput = document.getElementById('prod-desc');
+    const isNewInput = document.getElementById('prod-isnew');
+    const modalTitle = document.getElementById('modal-title');
+    const genderInput = document.getElementById('prod-gender');
+    let itemToDelete = null;
+
+    function renderProducts() {
+        const products = window.Store.getProducts();
+        tbody.innerHTML = '';
+        if (!products.length) { tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted p-4">No products. Add one!</td></tr>'; return; }
+        products.forEach(p => {
+            const img = window.Store.getProductImage(p);
+            const sizesStr = p.sizes ? p.sizes.join(', ') : '—';
+            const colorsH = (p.variants||[]).map(v => `<span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:${v.color};border:1px solid #ddd;vertical-align:middle;" title="${v.colorName}"></span>`).join(' ');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td><div style="width:40px;height:40px;border-radius:var(--radius-sm);overflow:hidden;background:#eee;"><img src="${img}" alt="" style="width:100%;height:100%;object-fit:cover;"></div></td>
+                <td class="fw-medium">${p.title} ${p.isNew?'<span class="status-badge paid" style="margin-left:6px">New</span>':''}</td>
+                <td class="text-uppercase text-xs fw-semibold text-muted">${p.category}${p.gender?' · '+p.gender:''}</td>
+                <td class="text-xs text-muted">${sizesStr}</td>
+                <td>${colorsH || '—'}</td>
+                <td class="fw-semibold">$${parseFloat(p.price).toFixed(2)}</td>
+                <td>
+                    <button class="action-btn" onclick="editProduct('${p.id}')" title="Edit" style="color:var(--color-primary);margin-right:8px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                    </button>
+                    <button class="action-btn" onclick="promptDelete('${p.id}')" title="Delete">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    </button>
+                </td>`;
+            tbody.appendChild(tr);
+        });
+    }
+
+    window.promptDelete = (id) => { itemToDelete=id; deleteModal.classList.add('active'); };
+    document.getElementById('btn-cancel-delete').addEventListener('click', () => { itemToDelete=null; deleteModal.classList.remove('active'); });
+    document.getElementById('btn-confirm-delete').addEventListener('click', () => { if(itemToDelete){window.Store.deleteProduct(itemToDelete); renderProducts();} itemToDelete=null; deleteModal.classList.remove('active'); });
+
+    window.editProduct = function(id) {
+        const p = window.Store.getProductById(id); if(!p) return;
+        modalTitle.textContent = "Edit Product";
+        idInput.value = p.id; titleInput.value = p.title; priceInput.value = p.price;
+        categorySelect.value = p.category; descInput.value = p.description; isNewInput.checked = p.isNew||false;
+        genderGroup.style.display = p.category==='footwear'?'block':'none';
+        if (p.gender) genderInput.value = p.gender;
+        renderSizeOpts(p.category, p.sizes);
+        // Populate variants
+        variantsContainer.innerHTML = ''; variantCounter = 0;
+        (p.variants||[]).forEach(v => addVariantRow(v));
+        modal.classList.add('active');
+    };
+
+    document.getElementById('open-add-modal').addEventListener('click', () => {
+        form.reset(); idInput.value = ''; genderGroup.style.display='none';
+        modalTitle.textContent = "Add New Product";
+        renderSizeOpts('men');
+        variantsContainer.innerHTML = ''; variantCounter = 0;
+        addVariantRow(); // Start with one empty variant row
+        modal.classList.add('active');
+    });
+
+    const closeModal = () => modal.classList.remove('active');
+    document.getElementById('close-modal').addEventListener('click', closeModal);
+    document.getElementById('btn-cancel').addEventListener('click', closeModal);
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const selectedSizes = [...document.querySelectorAll('input[name="prod-sizes"]:checked')].map(cb=>cb.value);
+        if (!selectedSizes.length) { alert("Please select at least one size."); return; }
+        const variants = collectVariants();
+        if (!variants.length) { alert("Please add at least one color variant with images."); return; }
+
+        const data = { title: titleInput.value, price: parseFloat(priceInput.value), category: categorySelect.value, sizes: selectedSizes, variants, description: descInput.value, isNew: isNewInput.checked };
+        if (categorySelect.value === 'footwear') data.gender = genderInput.value;
+
+        const existingId = idInput.value;
+        if (existingId) window.Store.updateProduct(existingId, data);
+        else window.Store.addProduct(data);
+        closeModal(); renderProducts();
+    });
+
+    // Orders & Customers
+    function renderOrders() {
+        const tb = document.getElementById('orders-tbody'); const orders = window.Store.getOrders(); tb.innerHTML='';
+        if(!orders.length){tb.innerHTML='<tr><td colspan="6" class="text-center text-muted p-4">No orders yet.</td></tr>'; return;}
+        [...orders].reverse().forEach(o => { const tr=document.createElement('tr'); tr.innerHTML=`<td class="fw-medium">${o.id}</td><td class="text-sm">${new Date(o.date).toLocaleDateString()}</td><td>${o.customerName}</td><td>${o.itemCount} items</td><td class="fw-bold">$${o.total.toFixed(2)}</td><td><span class="status-badge paid">${o.status}</span></td>`; tb.appendChild(tr); });
+    }
+    function renderCustomers() {
+        const tb = document.getElementById('customers-tbody'); const custs = window.Store.getCustomers(); tb.innerHTML='';
+        if(!custs.length){tb.innerHTML='<tr><td colspan="5" class="text-center text-muted p-4">No customers yet.</td></tr>'; return;}
+        [...custs].reverse().forEach(c => { const tr=document.createElement('tr'); tr.innerHTML=`<td class="text-xs text-muted">${c.id}</td><td class="fw-medium">${c.name}</td><td>${c.email}</td><td class="fw-bold">$${c.totalValue.toFixed(2)}</td><td class="text-sm">${new Date(c.joined).toLocaleDateString()}</td>`; tb.appendChild(tr); });
+    }
+    renderProducts();
+});
+</script>
